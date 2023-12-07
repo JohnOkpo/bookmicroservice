@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/authorms/authorms.iml" filepath="$PROJECT_DIR$/authorms/authorms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bookms/bookms.iml" filepath="$PROJECT_DIR$/bookms/bookms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/microservicewrapper.iml" filepath="$PROJECT_DIR$/.idea/microservicewrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ratems/ratems.iml" filepath="$PROJECT_DIR$/ratems/ratems.iml" />
+    </modules>
+  </component>
+</project>
