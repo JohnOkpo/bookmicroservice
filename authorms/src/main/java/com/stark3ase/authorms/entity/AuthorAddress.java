@@ -1,23 +1,26 @@
 package com.stark3ase.authorms.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import java.util.Objects;
 import java.util.UUID;
 
-
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class AuthorAddress
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID addressId;
     @Email(message = "Invalid email Id")
     private String email;
@@ -25,7 +28,20 @@ public class AuthorAddress
     private String phoneNumber;
     @NotEmpty(message = "Contact Address can not be null or empty")
     private String contactAddress;
-    @OneToOne
-    private Author authorId;
+    @OneToOne(mappedBy = "authorAddress")
+    @JsonManagedReference
+    private Author author;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        AuthorAddress that = (AuthorAddress) o;
+        return addressId != null && Objects.equals(addressId, that.addressId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

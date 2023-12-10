@@ -2,6 +2,7 @@ package com.stark3ase.authorms.service.impl;
 
 import com.stark3ase.authorms.dto.AuthorDto;
 import com.stark3ase.authorms.entity.Author;
+import com.stark3ase.authorms.entity.AuthorAddress;
 import com.stark3ase.authorms.mapper.AuthorMapper;
 import com.stark3ase.authorms.repository.AuthorRepository;
 import com.stark3ase.authorms.service.AuthorService;
@@ -30,8 +31,7 @@ public class AuthorServiceImpl implements AuthorService
     public AuthorDto createNewAuthor(AuthorDto authorDto) {
         Author incomingDto = authorMapper.convertToAuthor(authorDto);
         Author newAuthor = authorRepository.save(incomingDto);
-        AuthorDto newAuthorDto = authorMapper.convertToAuthorDto(newAuthor);
-        return newAuthorDto;
+        return authorMapper.convertToAuthorDto(newAuthor);
     }
 
     @Override
