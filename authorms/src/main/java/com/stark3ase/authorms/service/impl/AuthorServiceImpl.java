@@ -36,6 +36,13 @@ public class AuthorServiceImpl implements AuthorService
 
     @Override
     public AuthorDto getAuthor(UUID authorId) {
+
+        if(authorId == null)
+        {
+            throw new RuntimeException("Please provide a valid ID");
+        }
+
+
         Author authorDb = authorRepository.getAuthorByAuthorId(authorId);
         if(authorDb != null)
         {
