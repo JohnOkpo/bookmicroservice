@@ -1,10 +1,14 @@
 package com.stark3ase.authorms.mapper;
 
-import com.stark3ase.authorms.config.MapperConfig;
 import com.stark3ase.authorms.dto.AuthorDto;
+import com.stark3ase.authorms.dto.AuthorRequest;
 import com.stark3ase.authorms.entity.Author;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthorMapper
@@ -24,6 +28,18 @@ public class AuthorMapper
     public AuthorDto convertToAuthorDto(Author author)
     {
         return modelMapper.map(author, AuthorDto.class);
+    }
+
+    public List<AuthorDto> convertToAuthorDtoList(List<Author> authorList)
+    {
+        return authorList.stream()
+                .map(this::convertToAuthorDto)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<AuthorDto> convertToAuthorDtoOptional(Optional<Author> optionalAuthor)
+    {
+        return optionalAuthor.map(this::convertToAuthorDto);
     }
 
 }

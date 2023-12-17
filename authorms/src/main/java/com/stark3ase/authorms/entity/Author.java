@@ -28,10 +28,8 @@ public class Author
     @JsonFormat(pattern = "Lastname")
     @NotBlank(message = "Lastname shouldn't be null or empty")
     private String lastName;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_address_id")
-    @JsonBackReference
-    private AuthorAddress authorAddress;
+    @Column(name = "author_address_id")
+    private UUID authorAddress;
 
     @Override
     public boolean equals(Object o) {

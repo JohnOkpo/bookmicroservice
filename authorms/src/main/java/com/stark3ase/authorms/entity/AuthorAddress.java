@@ -28,9 +28,6 @@ public class AuthorAddress
     private String phoneNumber;
     @NotEmpty(message = "Contact Address can not be null or empty")
     private String contactAddress;
-    @OneToOne(mappedBy = "authorAddress")
-    @JsonManagedReference
-    private Author author;
 
     @Override
     public boolean equals(Object o) {
