@@ -36,7 +36,8 @@ public class AuthorServiceImpl implements AuthorService
     @Override
     public AuthorRequest createNewAuthor(AuthorRequest authorRequest) {
 
-        if(authorRequest.getAuthorAddress() == null && authorRequest.getAuthorDto() == null)
+        if(authorRequest.getAuthorAddress().getEmail().isEmpty()  ||
+                authorRequest.getAuthorDto().getFirstName().isEmpty() )
         {
             throw new AuthorCustomException.AuthorNotCreatedException("Please provide a valid request");
         }
@@ -79,14 +80,8 @@ public class AuthorServiceImpl implements AuthorService
     @Override
     public List<AuthorRequest> getAllAuthor() {
         List<Author> listOfAuthors = authorRepository.findAll();
-//        List<AuthorDto> listOfAuthorsDto = new ArrayList<>();
         List<AuthorRequest> authorRequests = new ArrayList<>();
 
-//        for (Author author : listOfAuthors
-//             ) {
-//                listOfAuthorsDto.add(authorMapper.convertToAuthorDto(author));
-//              }
-//        int i = 1;
         for(Author author : listOfAuthors)
         {
             UUID authorAddressId = author.getAuthorAddress();
@@ -98,6 +93,10 @@ public class AuthorServiceImpl implements AuthorService
 
     @Override
     public Boolean deleteAuthor(UUID authorId) {
+        if(authorId == null)
+        {
+            throw new RuntimeException("Please provide a valid ID");
+        }
         Author authorDb = authorRepository.getAuthorByAuthorId(authorId);
         if(authorDb != null)
         {
@@ -115,18 +114,18 @@ public class AuthorServiceImpl implements AuthorService
 
     @Override
     public AuthorRequest updateAuthor(UUID authorId, AuthorRequest authorRequest) {
+        if(authorId == null)
+        {
+            throw new RuntimeException("Please provide a valid ID");
+        }
         Author  isAuthorPresent = authorRepository.getAuthorByAuthorId(authorId);
         if(isAuthorPresent != null)
         {
             UUID  authorAddressId = isAuthorPresent.getAuthorAddress();
-//            authorDto.setFirstName(isAuthorPresent.getFirstName());
-//            authorDto.setLastName(isAuthorPresent.getLastName());
-//            authorDto.setAuthorAddress(isAuthorPresent.getAuthorAddress());
-//            log.info(isAuthorPresent.getAuthorAddress().toString());
+
             AuthorDto authorDto = authorRequest.getAuthorDto();
             isAuthorPresent.setFirstName(authorDto.getFirstName());
             isAuthorPresent.setLastName(authorDto.getLastName());
-//            isAuthorPresent.setAuthorId(authorId);
 
             AuthorAddress authorAddress = authorRequest.getAuthorAddress();
             AuthorAddress fetchAuthorAddress = authorAddressRepository.getAuthorAddressByAddressId(authorAddressId);
@@ -149,6 +148,11 @@ public class AuthorServiceImpl implements AuthorService
     @Override
     public AuthorRequest patchAuthor(UUID authorId, AuthorRequest authorRequest)
     {
+        if(authorId == null)
+        {
+            throw new RuntimeException("Please provide a valid ID");
+        }
+
         Author existingAuthor = authorRepository.getAuthorByAuthorId(authorId);
         AuthorAddress existingAddress = authorAddressRepository.getAuthorAddressByAddressId(existingAuthor.getAuthorAddress());
 
