@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/authorms/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/authorms/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bookgateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bookgateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bookms/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bookms/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ratems/src/main/java" charset="UTF-8" />

@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/authorms/pom.xml" />
         <option value="$PROJECT_DIR$/bookms/pom.xml" />
         <option value="$PROJECT_DIR$/ratems/pom.xml" />
+        <option value="$PROJECT_DIR$/bookgateway/pom.xml" />
       </list>
     </option>
   </component>

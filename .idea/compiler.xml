@@ -7,13 +7,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="bookms" />
         <module name="authorms" />
         <module name="ratems" />
+        <module name="bookgateway" />
+        <module name="bookms" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authorms" target="17" />
+      <module name="bookgateway" target="17" />
       <module name="bookms" target="17" />
       <module name="ratems" target="17" />
     </bytecodeTargetLevel>
@@ -21,6 +23,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authorms" options="-parameters" />
+      <module name="bookgateway" options="-parameters" />
       <module name="bookms" options="-parameters" />
       <module name="ratems" options="-parameters" />
     </option>
