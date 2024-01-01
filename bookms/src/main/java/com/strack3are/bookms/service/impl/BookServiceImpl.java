@@ -13,20 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-
 @Service
 @Slf4j
 public class BookServiceImpl implements BookService {
 
-
-//    private static ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-//    private static Validator validator = validatorFactory.getValidator();
-
-//    @Autowired
     private final BookRepository bookRepository;
-
-//    @Autowired
     private final BookMapper bookMapper;
 
     public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper) {
@@ -37,9 +28,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookModelDto createBook(BookModelDto bookModelDto)
     {
-//        Set<ConstraintViolation<BookModelDto>> violations = validator.validate(bookModelDto);
-
-//        if(!violations.isEmpty())
         if(bookModelDto.getTitle().isEmpty())
         {
             throw new NullFieldException("Please provide the required values, for empty fields");
@@ -110,17 +98,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public void updateRating(RateRequest rateRequest)
     {
-        //log.info(rateRequest.getBookId().toString());
-        Optional<BookModel> book = bookRepository.findById(rateRequest.getBookId());
-//        double ratingValue = book.stream().mapToInt(BookModel::getRating).average().orElse(0);
-//        int intValue = (int) Math.round(ratingValue);
-//        BookModelDto bookModelDto = getBook(rateRequest.getBookId());
+        Optional<BookModel> book = bookRepository.findById(rateRequest.getBookId());;
         BookModel allBookValue = book.get();
         allBookValue.setRating(allBookValue.getRating()+1);
         BookModel updatedBook = new BookModel(allBookValue.getId(), allBookValue.getTitle(), allBookValue.getAuthorId(),
                 allBookValue.getPublisherId(), allBookValue.getYOfP(),allBookValue.getIsbn(),
                 allBookValue.getRating());
         bookRepository.save(updatedBook);
-
     }
 }

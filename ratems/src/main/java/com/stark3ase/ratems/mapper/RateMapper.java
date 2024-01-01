@@ -4,7 +4,6 @@ import com.stark3ase.ratems.dto.RateRequest;
 import com.stark3ase.ratems.model.RateModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

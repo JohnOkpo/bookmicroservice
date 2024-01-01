@@ -11,5 +11,4 @@ public interface RateService
     RateRequest getRate(UUID rateId);
     void deleteRate(UUID rateId);
     void updateRate(UUID rateId, RateRequest rateRequest);
-    void updateRating(UUID rateId);
 }

@@ -19,15 +19,11 @@ public class BookMessageProducer
 
     public void sendMessage(RateModel rateModel)
     {
-//        RateRequest rateRequestDto = rateMapper.convertToRateRequest(rateModel);
         RateRequest rateRequest = new RateRequest();
-
         rateRequest.setRateId(rateModel.getRateId());
         rateRequest.setReview(rateModel.getReview());
         rateRequest.setRating(rateModel.getRating());
         rateRequest.setBookId(rateModel.getBookId());
-//        rateRequest.setCreatedAt(rateModel.getCreatedAt());
-
         rabbitTemplate.convertAndSend("bookRatingQueue",rateRequest);
     }
 
