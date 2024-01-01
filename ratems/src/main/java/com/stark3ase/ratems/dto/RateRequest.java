@@ -20,7 +20,7 @@ public class RateRequest
 
     private UUID rateId;
     private int rating;
-    private UUID bookId;
+    private Long bookId;
     private String review;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

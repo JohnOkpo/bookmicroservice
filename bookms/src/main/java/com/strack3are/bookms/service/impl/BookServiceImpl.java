@@ -1,30 +1,22 @@
 package com.strack3are.bookms.service.impl;
 
 import com.strack3are.bookms.dto.BookModelDto;
+import com.strack3are.bookms.dto.RateRequest;
 import com.strack3are.bookms.exception.NullFieldException;
 import com.strack3are.bookms.mapper.BookMapper;
 import com.strack3are.bookms.model.BookModel;
 import com.strack3are.bookms.repository.BookRepository;
 import com.strack3are.bookms.service.BookService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 
 @Service
-//@RequiredArgsConstructor
+@Slf4j
 public class BookServiceImpl implements BookService {
 
 
@@ -112,6 +104,23 @@ public class BookServiceImpl implements BookService {
         else {
             throw new NullFieldException("No value matching the given ID was found");
         }
+
+    }
+
+    @Override
+    public void updateRating(RateRequest rateRequest)
+    {
+        //log.info(rateRequest.getBookId().toString());
+        Optional<BookModel> book = bookRepository.findById(rateRequest.getBookId());
+//        double ratingValue = book.stream().mapToInt(BookModel::getRating).average().orElse(0);
+//        int intValue = (int) Math.round(ratingValue);
+//        BookModelDto bookModelDto = getBook(rateRequest.getBookId());
+        BookModel allBookValue = book.get();
+        allBookValue.setRating(allBookValue.getRating()+1);
+        BookModel updatedBook = new BookModel(allBookValue.getId(), allBookValue.getTitle(), allBookValue.getAuthorId(),
+                allBookValue.getPublisherId(), allBookValue.getYOfP(),allBookValue.getIsbn(),
+                allBookValue.getRating());
+        bookRepository.save(updatedBook);
 
     }
 }

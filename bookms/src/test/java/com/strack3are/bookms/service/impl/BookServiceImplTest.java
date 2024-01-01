@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-
+import java.util.UUID;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -55,13 +55,13 @@ public class BookServiceImplTest {
 
         BookModel bookModel = new BookModel(1L,
                 "sample_title",
-                123L,
-                45L,2004, 34L);
+                UUID.fromString("d51b50b0-9286-46b9-b424-4f16fcdbaa75"),
+                45L,2004, 34L,1);
 
         BookModelDto expectedBookResponse = new BookModelDto(1L,
                 "sample_title",
-                123L,
-                45L,2004, 34L);
+                UUID.fromString("d51b50b0-9286-46b9-b424-4f16fcdbaa75"),
+                45L,2004, 34L,1);
 
         Mockito.when(bookRepository.findById(1L)).thenReturn(Optional.of(bookModel));
         Mockito.when(bookMapper.convertToBookModelDto(Mockito.any(BookModel.class))).thenReturn(expectedBookResponse);

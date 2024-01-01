@@ -51,6 +51,19 @@ public class AuthorController
         }
     }
 
+    @GetMapping("/authorForBook/{id}")
+    public AuthorRequest getAuthorForBook(@PathVariable("id") UUID authorId)
+    {
+        try{
+           return authorService.getAuthor(authorId);
+//            return authorDto;
+        }catch (Exception ex)
+        {
+            log.error("There is an error "+ex.getMessage());
+            return null;
+        }
+    }
+
     @GetMapping
     public ResponseEntity<?> getAllAuthor()
     {

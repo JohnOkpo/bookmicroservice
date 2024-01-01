@@ -53,6 +53,8 @@ public class RateServiceImp implements RateService
         return rateMapper.convertToOptional(rateModel);
     }
 
+
+
     @Override
     public void deleteRate(UUID rateId)
     {
@@ -78,6 +80,12 @@ public class RateServiceImp implements RateService
         rateModelFromDb.setUpdatedAt(LocalDateTime.now());
         rateRepository.save(rateMapper.convertToRateModel(rateModelFromDb));
     }
+
+    @Override
+    public void updateRating(UUID rateId) {
+
+    }
+
 
     private void validateRequest(RateRequest rateRequest)
     {

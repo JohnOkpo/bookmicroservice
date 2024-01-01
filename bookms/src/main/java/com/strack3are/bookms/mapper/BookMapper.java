@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class BookMapper
 {
@@ -15,6 +17,11 @@ public class BookMapper
     public BookModel convertToBookModel(BookModelDto bookModelDto)
     {
         return modelMapper.map(bookModelDto, BookModel.class);
+    }
+
+    public BookModelDto bookModelOptionalToBook(Optional<BookModel> optionalBookModel)
+    {
+        return  optionalBookModel.map(this::convertToBookModelDto).orElse(null);
     }
 
     public BookModelDto convertToBookModelDto(BookModel bookModel)

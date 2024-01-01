@@ -2,7 +2,8 @@ package com.stark3ase.ratems.controller;
 
 import com.stark3ase.ratems.dto.RateRequest;
 import com.stark3ase.ratems.exceptions.CustomExceptions;
-import com.stark3ase.ratems.model.RateModel;
+import com.stark3ase.ratems.mapper.RateMapper;
+import com.stark3ase.ratems.messaging.BookMessageProducer;
 import com.stark3ase.ratems.service.impl.RateServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,13 @@ import java.util.UUID;
 public class RateController
 {
     private final RateServiceImp rateServiceImp;
+    private BookMessageProducer bookMessageProducer;
+    private final RateMapper rateMapper;
 
-    public RateController(RateServiceImp rateServiceImp) {
+    public RateController(RateServiceImp rateServiceImp, BookMessageProducer bookMessageProducer, RateMapper rateMapper) {
         this.rateServiceImp = rateServiceImp;
+        this.bookMessageProducer = bookMessageProducer;
+        this.rateMapper = rateMapper;
     }
 
     @PostMapping
@@ -26,6 +31,7 @@ public class RateController
     {
         try {
             RateRequest request = rateServiceImp.createRate(rateRequest);
+            bookMessageProducer.sendMessage(rateMapper.convertToRateModel(request));
             return ResponseEntity.status(HttpStatus.CREATED).body(request);
         }catch (RuntimeException ex)
         {
@@ -57,6 +63,12 @@ public class RateController
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
+
+//    @GetMapping
+//    public Integer getRatingById(@RequestParam Long bookId)
+//    {
+//        return rateServiceImp.getRateByBookId(bookId);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateRate(@PathVariable("id") UUID rateId, @RequestBody RateRequest request)

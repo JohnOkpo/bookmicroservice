@@ -21,7 +21,7 @@ public class RateModel
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID rateId;
     private int rating;
-    private UUID bookId;
+    private Long bookId;
     private String review;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -1,6 +1,10 @@
 package com.strack3are.bookms.controller;
 
+import com.strack3are.bookms.clients.AuthorClient;
+import com.strack3are.bookms.dto.BookAuthor;
 import com.strack3are.bookms.dto.BookModelDto;
+import com.strack3are.bookms.external.Author;
+import com.strack3are.bookms.external.AuthorRequest;
 import com.strack3are.bookms.service.impl.BookServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -16,11 +20,18 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/book")
-@AllArgsConstructor
+//@AllArgsConstructor
 public class BookController
 {
     @Autowired
     private BookServiceImpl bookService;
+
+    private AuthorClient authorClient;
+
+    public BookController(BookServiceImpl bookService, AuthorClient authorClient) {
+        this.bookService = bookService;
+        this.authorClient = authorClient;
+    }
 
     @PostMapping("/addBook")
     public ResponseEntity<BookModelDto> addBook(@RequestBody BookModelDto bookModelDto)
@@ -36,11 +47,15 @@ public class BookController
     }
 
     @GetMapping("/getBook/{bookId}")
-    public ResponseEntity<BookModelDto> getBook(@PathVariable("bookId") Long bookId)
+    public ResponseEntity<?> getBook(@PathVariable("bookId") Long bookId)
     {
         try{
             BookModelDto isBookPresent = bookService.getBook(bookId);
-            return new ResponseEntity<BookModelDto>(isBookPresent,HttpStatus.FOUND);
+            AuthorRequest author = authorClient.getAuthorForBook(isBookPresent.getAuthorId());
+            BookAuthor bookAuthor = new BookAuthor();
+            bookAuthor.setAuthorRequest(author);
+            bookAuthor.setBookModelDto(isBookPresent);
+            return new ResponseEntity<>(bookAuthor,HttpStatus.FOUND);
         }catch (Exception ex)
         {
             log.error(ex.getMessage());

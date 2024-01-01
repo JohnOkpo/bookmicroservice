@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
@@ -23,11 +24,12 @@ public class BookModel
     @NotNull
     private String title;
     @NotNull
-    private Long authorId;
+    private UUID authorId;
     @NotNull
     private Long publisherId;
     @NotNull
     private int yOfP;
     @NotNull
     private Long isbn;
+    private int rating;
 }
