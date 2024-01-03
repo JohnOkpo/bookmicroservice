@@ -1,0 +1,91 @@
+services:
+  postgres:
+    container_name: postgresdb_container
+    image: postgres:16-alphne
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    network:
+      - postgres
+    restart: unless-stopped
+
+  servicereg:
+    container_name: bookregistry
+    image: bookrgisteryimage
+    ports:
+      - "8761:8761"
+    depends_on:
+      - rabbitmq
+      - postgres
+    networks:
+      - microservice-network
+      - postgres
+
+  bookms:
+    image: book-microservice
+    container_name: book
+    ports:
+      - 8081:8081
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://servicereg:8761/eureka
+
+  authorms:
+    image: author-microservice
+    container_name: author
+    ports:
+      - 8082:8082
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://servicereg:8761/eureka
+
+  ratems:
+    image: rate-microservice
+    container_name: rate
+    ports:
+      - 8083:8083
+    depends_on:
+      - servicereg
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://servicereg:8761/eureka
+    networks:
+      - microservice-network
+      - postgres
+
+    rabbitmq:
+      image: rabbitmq:3:10-management-alpine
+      container_name: rabbitmq
+      ports:
+        - 5672:5672
+        - 15672:15672
+      networks:
+        - microservice-network
+        - postgres
+
+networks:
+
+  microservice-network:
+    driver: bridge
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+
+
+
+
+
